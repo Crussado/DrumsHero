@@ -108,7 +108,7 @@ class GameScene(Scene):
         self.event_times = self.game_state.event_times.copy()
 
         self.initial_time = pygame.time.get_ticks()
-        pygame.mixer.Sound(self.game_state.file).play()
+        self.game_state.music_controller.play()
 
     def draw(self, screen):
         super().draw(screen)
@@ -164,7 +164,7 @@ class GameScene(Scene):
     def synchronize(self, actual_time):
         if ((len(self.event_times) > 0 and(actual_time - self.event_times[0]) > self.game_state.eps_time)) or\
             (len(self.times) > 0 and((actual_time - self.times[0]) > self.game_state.eps_time)):
-            print('discard')
+            # print('discard')
             self.event_times = self.event_times[1:]
             self.times = self.times[1:]
             self.croma = list(map(lambda r: r[1:], self.croma))

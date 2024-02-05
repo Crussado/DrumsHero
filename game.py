@@ -27,16 +27,16 @@ class GameState():
         self.screen = pygame.display.set_mode((self.width, self.height))
 
     def music_analizer(self):
-        music_controller = Music(self.file)
-        self.velocity = music_controller.get_vel()/100
+        self.music_controller = Music(self.file)
+        self.music_controller.mix_song()
+        self.velocity = self.music_controller.get_vel()/100
         time = (DIST/self.velocity)/self.fps
-        self.times, self.croma = music_controller.get_cromagrama()
+        self.times, self.croma = self.music_controller.get_cromagrama()
         random.Random(1).shuffle(self.croma)
-        self.event_times = music_controller.get_events()
+        self.event_times = self.music_controller.get_events()
         self.times -= time
         # TODO
         self.times = list(filter(lambda x: x >= 0, self.times))
-
         pygame.event.post(pygame.event.Event(FINISHLOAD))
 
     def font(self, size):

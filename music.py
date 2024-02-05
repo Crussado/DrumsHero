@@ -1,5 +1,8 @@
 import librosa
-import pygame
+import numpy as np
+import soundfile as sf
+import sounddevice as sd
+
 class Music():
     def __init__(self, file='./test.mp3') -> None:
         self.song, self.sampling_rate = librosa.load(file)
@@ -22,6 +25,33 @@ class Music():
     def get_events(self):
         return self.beat_times
 
+    def mix_song(self):
+        applause, sr_applause = librosa.load('./applause.mp3')
+        # Asegurarse de que ambos audios tengan la misma frecuencia de muestreo
+        applause = librosa.resample(applause, orig_sr=sr_applause, target_sr=self.sampling_rate)
+        self.extra_time = librosa.get_duration(y=applause, sr=self.sampling_rate)
+        transicion_length = 3000
+
+        # Aplicar una ventana de Hamming a la región de transición
+        ventana_transicion = np.hamming(2 * transicion_length)
+        ventana_transicion = ventana_transicion[:transicion_length]
+
+        transition_song = self.song[:transicion_length]
+        transition_applause = applause[-transicion_length:]
+
+        transition_song *= ventana_transicion
+        transition_applause *= ventana_transicion
+
+        # Unir los audios en la región de transición
+        self.game_song = np.concatenate((applause[:-transicion_length], transition_applause + transition_song, self.song[transicion_length:]))
+
+        # Guardar el audio resultante con soundfile
+        # sf.write('audio_unido.wav', audio_unido, self.sampling_rate)
+        self.intervalos_tiempo += self.extra_time
+        self.beat_times += self.extra_time
+
+    def play(self):
+        sd.play(self.game_song, samplerate=self.sampling_rate)
 '''
     song: amplitude list
     sampling_rate: number of samples per second in the song
