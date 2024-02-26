@@ -97,7 +97,7 @@ class GameScene(Scene):
         self.last_tokens = []
         self.particles = []
 
-        self.fail = pygame.mixer.Sound('./fail.mp3')
+        self.fail = pygame.mixer.Sound('./sounds/fail.mp3')
 
         # self.draw_screen(screen)
         self.create_buttons()
@@ -167,7 +167,8 @@ class GameScene(Scene):
             # print('discard')
             self.event_times = self.event_times[1:]
             self.times = self.times[1:]
-            self.croma = list(map(lambda r: r[1:], self.croma))
+            if len(self.croma[0]) > 0:
+                self.croma = list(map(lambda r: r[1:], self.croma))
 
     def add_token(self, index):
             token = Token(index % self.game_state.cant_buttons)
@@ -184,7 +185,7 @@ class GameScene(Scene):
         if abs(actual_time - times[0]) <= self.game_state.eps_time:
             times = times[1:]
             for i, note in enumerate(self.croma):
-                if note[0] >= self.game_state.eps_mel:
+                if len(note) > 0 and note[0] >= self.game_state.eps_mel:
                     draw.append(i)
         return draw
 
@@ -205,7 +206,8 @@ class GameScene(Scene):
         draw += self.check_time_rules(self.times, actual_time)
         # draw += self.check_time_rules(self.event_times, actual_time)
         if draw and self.own_rules():
-            self.croma = list(map(lambda r: r[1:], self.croma))
+            if len(self.croma[0]) > 0:
+                self.croma = list(map(lambda r: r[1:], self.croma))
             for index in draw:
                 self.add_token(index)
 
