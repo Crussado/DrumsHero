@@ -11,8 +11,8 @@ pip install
 python3 game.py
 ```
 ## TODO
-- [] Final screen.
-- [] Adjust musical algorithm.
-- [] Make AI that play with genetic algorithms.
-- [] Make AI that play with reinforcement learning.
-- [] Add computer vision to play like a drums.
+- [ ] Final screen.
+- [ ] Adjust musical algorithm.
+- [ ] Make AI that play with genetic algorithms.
+- [ ] Make AI that play with reinforcement learning.
+- [ ] Add computer vision to play like a drums.
