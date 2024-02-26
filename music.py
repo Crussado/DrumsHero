@@ -4,7 +4,7 @@ import soundfile as sf
 import sounddevice as sd
 
 class Music():
-    def __init__(self, file='./test.mp3') -> None:
+    def __init__(self, file='./music/test.mp3') -> None:
         self.song, self.sampling_rate = librosa.load(file)
         self.cromagrama = librosa.feature.chroma_stft(y=self.song, sr=self.sampling_rate)
         self.intervalos_tiempo = librosa.frames_to_time(range(self.cromagrama.shape[1]), sr=self.sampling_rate)
