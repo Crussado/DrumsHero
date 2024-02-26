@@ -2,7 +2,7 @@ import pygame
 import sys
 import random
 
-from config import WIDTH, HEIGHT, CANT_BUTTONS, FPS, DIST, FINISHLOAD
+from config import WIDTH, HEIGHT, CANT_BUTTONS, FPS, DIST, FINISHLOAD, TEST_FILE
 from music import Music
 from scenes import TitleScene
 
@@ -13,7 +13,7 @@ class GameState():
         self.combo = 0
 
         # Music file
-        self.file = './test2.mp3'
+        self.file = TEST_FILE
 
         # Generate note config
         self.eps_time = 0.1
@@ -56,7 +56,7 @@ class GameState():
         self.file = file
 
 class Game():
-    def __init__(self, file):
+    def __init__(self):
         # Pygame init
         pygame.init()
         pygame.mixer.init()
@@ -95,7 +95,7 @@ class Game():
         pygame.quit()
 
 def main():
-    game = Game('./test2.mp3')
+    game = Game()
     game.play()
     sys.exit()
 

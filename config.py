@@ -36,3 +36,5 @@ UPDATEANIMATION = pygame.USEREVENT + 1
 FINISHLOAD = pygame.USEREVENT + 2
 
 PADDING = 30
+
+TEST_FILE = './music/test.mp3'
